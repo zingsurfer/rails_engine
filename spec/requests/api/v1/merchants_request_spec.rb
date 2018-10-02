@@ -12,4 +12,14 @@ describe 'Merchants API' do
 
     expect(merchants.count).to eq(4)
   end
+  it 'sends one merchant via its id' do
+    id = create(:merchant).id
+
+    get "/api/v1/merchants/#{id}"
+
+    merchant = JSON.parse(response.body)
+
+    expect(merchant["id"]).to eq(id)
+    expect(response).to be_successful
+  end
 end
