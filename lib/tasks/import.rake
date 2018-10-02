@@ -23,8 +23,8 @@ namespace :import do
         updated_at: merchant[:updated_at]
       }
       Merchant.create!(merchant_hash)
-      puts "Created #{merchant.name}!"
     end
+    puts "Created #{Merchant.count} merchants!"
   end
 
   desc "Import customers from CSV file"
@@ -37,8 +37,8 @@ namespace :import do
         updated_at: customer[:updated_at]
       }
       Customer.create!(customer_hash)
-      puts "Created #{customer.first_name}"
     end
+    puts "Created #{Customer.count} customers!"
   end
 
   desc "Import invoices from CSV file"
@@ -52,13 +52,13 @@ namespace :import do
         updated_at: invoice[:updated_at]
       }
       Invoice.create!(invoice_hash)
-      puts "Created #{Invoice.count} invoices!"
     end
+    puts "Created #{Invoice.count} invoices!"
   end
-  
+
   desc "Import items from CSV file"
   task item: :environment do
-    CSV.foreach('./db/csv/items', headers: true, header_converters: :symbol) do |item|
+    CSV.foreach('./db/csv/items.csv', headers: true, header_converters: :symbol) do |item|
       item_hash = { id: item[:id],
         name: item[:name],
         description: item[:description],
@@ -68,8 +68,8 @@ namespace :import do
         updated_at: item[:updated_at]
       }
       Item.create!(item_hash)
-      puts "Created #{item.name}!"
     end
+    puts "Created #{Item.count} items!"
   end
 
   desc "Import invoice items from CSV file"
@@ -84,8 +84,8 @@ namespace :import do
         updated_at: invoice_item[:updated_at]
       }
       InvoiceItem.create!(invoice_item_hash)
-      puts "Created #{InvoiceItem.count} invoice items!"
     end
+    puts "Created #{InvoiceItem.count} invoice items!"
   end
 
   desc "Import transactions from CSV file"
@@ -100,8 +100,8 @@ namespace :import do
                            updated_at: transaction[:updated_at]
                           }
       Transaction.create!(transaction_hash)
-      puts "Created #{Transaction.count} transactions!"
     end
+    puts "Created #{Transaction.count} transactions!"
   end
 
 end
