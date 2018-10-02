@@ -8,5 +8,7 @@ RSpec.describe Merchant, type: :model do
   end
   describe 'relationships' do
     it {should have_many :items}
+    it {should have_many :invoices}
+    it {should have_many :customers}
   end
 end
