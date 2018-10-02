@@ -2,7 +2,7 @@ require 'csv'
 
 namespace :import do
   desc "All"
-  task all: [:clean_slate, :merchant, :invoice, :invoice_item, :item, :transaction, :customer]
+  task all: [:clean_slate, :merchant, :customer, :invoice, :item, :invoice_item, :transaction]
 
   desc "Remove existing data for a clean slate prior to import"
   task clean_slate: :environment do
@@ -27,6 +27,20 @@ namespace :import do
     end
   end
 
+  desc "Import customers from CSV file"
+  task customer: :environment do
+    CSV.foreach('./db/csv/customers.csv', headers: true, header_converters: :symbol) do |customer|
+      customer_hash = { id: customer[:id],
+        first_name: customer[:first_name],
+        last_name: customer[:last_name],
+        created_at: customer[:created_at],
+        updated_at: customer[:updated_at]
+      }
+      Customer.create!(customer_hash)
+      puts "Created #{customer.first_name}"
+    end
+  end
+
   desc "Import invoices from CSV file"
   task invoice: :environment do
     CSV.foreach('./db/csv/invoices.csv', headers: true, header_converters: :symbol) do |invoice|
@@ -39,6 +53,22 @@ namespace :import do
       }
       Invoice.create!(invoice_hash)
       puts "Created #{Invoice.count} invoices!"
+    end
+  end
+  
+  desc "Import items from CSV file"
+  task item: :environment do
+    CSV.foreach('./db/csv/items', headers: true, header_converters: :symbol) do |item|
+      item_hash = { id: item[:id],
+        name: item[:name],
+        description: item[:description],
+        unit_price: item[:unit_price],
+        merchant_id: item[:merchant_id],
+        created_at: item[:created_at],
+        updated_at: item[:updated_at]
+      }
+      Item.create!(item_hash)
+      puts "Created #{item.name}!"
     end
   end
 
@@ -58,22 +88,6 @@ namespace :import do
     end
   end
 
-  desc "Import items from CSV file"
-  task item: :environment do
-    CSV.foreach('./db/csv/items', headers: true, header_converters: :symbol) do |item|
-      item_hash = { id: item[:id],
-                    name: item[:name],
-                    description: item[:description],
-                    unit_price: item[:unit_price],
-                    merchant_id: item[:merchant_id],
-                    created_at: item[:created_at],
-                    updated_at: item[:updated_at]
-                  }
-      Item.create!(item_hash)
-      puts "Created #{item.name}!"
-    end
-  end
-
   desc "Import transactions from CSV file"
   task transaction: :environment do
     CSV.foreach('./db/csv/transactions.csv', headers: true, header_converters: :symbol) do |transaction|
@@ -90,17 +104,4 @@ namespace :import do
     end
   end
 
-  desc "Import customers from CSV file"
-  task customer: :environment do
-    CSV.foreach('./db/csv/customers.csv', headers: true, header_converters: :symbol) do |customer|
-      customer_hash = { id: customer[:id],
-        first_name: customer[:first_name],
-        last_name: customer[:last_name],
-        created_at: customer[:created_at],
-        updated_at: customer[:updated_at]
-      }
-      Customer.create!(customer_hash)
-      puts "Created #{customer.first_name}"
-    end
-  end
 end
