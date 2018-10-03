@@ -9,6 +9,6 @@ RSpec.describe Customer, type: :model do
   end
   describe 'relationships' do
     it {should have_many :invoices}
-    it {should have_many :merchants}
+    # it {should have_many :merchants}
   end
 end
