@@ -11,9 +11,13 @@ class Merchant < ApplicationRecord
     elsif params[:id]
       find_by(id: params[:id])
     elsif params[:created_at]
-      find_by(created_at: (params[:created_at]).to_datetime)
-    # elsif params[:updated_at]
-    #   find_by(updated_at: params[:updated_at].to_datetime)
+      find_by(created_at: params[:created_at])
+    elsif params[:updated_at]
+      find_by(updated_at: params[:updated_at].to_datetime)
     end
+  end
+
+  def self.most_revenue
+
   end
 end
