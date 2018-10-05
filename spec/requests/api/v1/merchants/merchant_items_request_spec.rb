@@ -11,5 +11,6 @@ describe 'MerchantItems API' do
 
     expect(response).to be_successful
     expect(items.class).to eq(Array)
+    expect(items.count).to eq(3)
   end
 end
