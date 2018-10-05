@@ -15,7 +15,7 @@ describe 'Invoices API' do
   it 'sends one invoice via its id' do
     id = create(:invoice).id
 
-    get "/api/v1/merchants/#{id}"
+    get "/api/v1/invoices/#{id}"
 
     invoice = JSON.parse(response.body)
 
