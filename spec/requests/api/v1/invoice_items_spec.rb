@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'InvoiceItems API' do
   it 'sends a list of invoice items' do
-    invoice_items = create_list(:invoice_item, 4)
+    create_list(:invoice_item, 4)
 
     get "/api/v1/invoice_items/"
 
