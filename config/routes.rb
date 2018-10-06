@@ -5,9 +5,10 @@ Rails.application.routes.draw do
       namespace :merchants do
         get '/find', to: 'search#show'
         get '/most_revenue', to: 'most_revenue#index'
-        get '/:id/items', to: 'merchant_items#index'
-        get '/:id/invoices', to: 'merchant_invoices#index'
+        get '/:id/items', to: 'items#index'
+        get '/:id/invoices', to: 'invoices#index'
       end
+
       namespace :invoices do
         get '/:id/items', to: 'items#index'
         get '/:id/invoice_items', to: 'invoice_items#index'
