@@ -10,6 +10,10 @@ Rails.application.routes.draw do
         get '/:id/invoices', to: 'invoices#index'
       end
 
+      namespace :items do
+        get '/:id/merchant', to: 'merchant#show'
+      end
+
       namespace :invoices do
         get '/:id/items', to: 'items#index'
         get '/:id/invoice_items', to: 'invoice_items#index'
