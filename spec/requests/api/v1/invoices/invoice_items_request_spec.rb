@@ -12,9 +12,9 @@ describe 'Invoice Items API' do
     expect(response).to be_successful
     expect(items.class).to eq(Array)
     expect(items.count).to eq(4)
-    expect(item_1["id"]).to eq(item_1.id)
-    expect(item_2["id"]).to eq(item_2.id)
-    expect(item_3["id"]).to eq(item_3.id)
-    expect(item_4["id"]).to eq(item_4.id)
+    expect(items[0]["id"]).to eq(item_1.id)
+    expect(items[1]["id"]).to eq(item_2.id)
+    expect(items[2]["id"]).to eq(item_3.id)
+    expect(items[3]["id"]).to eq(item_4.id)
   end
 end
