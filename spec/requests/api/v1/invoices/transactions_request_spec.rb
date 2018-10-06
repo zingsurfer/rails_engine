@@ -4,7 +4,7 @@ describe 'Invoice Transactions API' do
   it 'sends a list of transactions for an invoice' do
     invoice_id = create(:invoice).id
     transaction_1, transaction_2, transaction_3 = create_list(:transaction, 3, invoice_id: invoice_id)
-    unrelated_transaction = create(:transaction)
+    create(:transaction) #unrelated_transaction
 
     get "/api/v1/invoices/#{invoice_id}/transactions"
 
