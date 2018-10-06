@@ -7,11 +7,11 @@ namespace :import do
   desc "Remove existing data for a clean slate prior to import"
   task clean_slate: :environment do
     Merchant.destroy_all
-    Invoice.destroy_all
-    InvoiceItem.destroy_all
-    Item.destroy_all
-    Transaction.destroy_all
     Customer.destroy_all
+    Invoice.destroy_all
+    Item.destroy_all
+    InvoiceItem.destroy_all
+    Transaction.destroy_all
   end
 
   desc "Import merchants from CSV file"
@@ -62,7 +62,7 @@ namespace :import do
       item_hash = { id: item[:id],
         name: item[:name],
         description: item[:description],
-        unit_price: item[:unit_price],
+        unit_price: item[:unit_price].to_f/100,
         merchant_id: item[:merchant_id],
         created_at: item[:created_at],
         updated_at: item[:updated_at]
@@ -79,7 +79,7 @@ namespace :import do
         item_id: invoice_item[:item_id],
         invoice_id: invoice_item[:invoice_id],
         quantity: invoice_item[:quantity],
-        unit_price: invoice_item[:unit_price],
+        unit_price: invoice_item[:unit_price].to_f/100,
         created_at: invoice_item[:created_at],
         updated_at: invoice_item[:updated_at]
       }
