@@ -4,7 +4,8 @@ describe 'Merchant Items API' do
   it 'sends a list of merchant items' do
     merchant = create(:merchant)
     item_1, item_2, item_3 = create_list(:item, 3, merchant_id: merchant.id, created_at: Time.now, updated_at: Time.now)
-
+    create(:item) # unrelated item
+    
     get "/api/v1/merchants/#{merchant.id}/items"
 
     items = JSON.parse(response.body)

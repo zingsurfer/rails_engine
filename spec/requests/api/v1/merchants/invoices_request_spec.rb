@@ -4,6 +4,7 @@ describe 'Merchant Invoices API' do
   it 'sends a list of merchant invoices' do
     merchant = create(:merchant)
     invoices = create_list(:invoice, 3, merchant_id: merchant.id)
+    create(:invoice) #unrelated invoice
 
     get "/api/v1/merchants/#{merchant.id}/invoices"
 
