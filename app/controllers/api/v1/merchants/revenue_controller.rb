@@ -4,4 +4,10 @@ class Api::V1::Merchants::RevenueController < ApplicationController
 
     render json: {  "total_revenue": merchant.revenue }
   end
+
+  def index
+    merchants = Merchant.total_revenue(params[:date])
+
+    render json: { "total_revenue": merchants[0].revenue }
+  end
 end
