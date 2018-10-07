@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe 'Invoice Customer API' do
   it 'sends the associated customer for an invoice' do
+    create(:customer) #unrelated customer
     customer_id = create(:customer).id
     invoice_id = create(:invoice, customer_id: customer_id).id
 
