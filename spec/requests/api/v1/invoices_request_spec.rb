@@ -11,6 +11,7 @@ describe 'Invoices API' do
     expect(response).to be_successful
     expect(invoices.class).to eq(Array)
     expect(invoices.count).to eq(4)
+    expect(invoices.last["id"]).to eq(Invoice.last.id)
   end
   it 'sends one invoice via its id' do
     id = create(:invoice).id
@@ -22,5 +23,6 @@ describe 'Invoices API' do
     expect(response).to be_successful
     expect(invoice.class).to eq(Hash)
     expect(invoice["id"]).to eq(id)
+    expect(invoice["merchant_id"]).to eq(Invoice.last.merchant_id)
   end
 end

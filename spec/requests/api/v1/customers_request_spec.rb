@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Customers API' do
   it 'sends a list of customers' do
-    create_list(:customer, 4)
+    customers = create_list(:customer, 4)
 
     get "/api/v1/customers/"
 
@@ -11,6 +11,7 @@ describe 'Customers API' do
     expect(response).to be_successful
     expect(customers.class).to eq(Array)
     expect(customers.count).to eq(4)
+    expect(customers[3]["id"]).to eq(Customer.last.id)
   end
   it 'sends a single customer' do
     id = create(:customer).id
@@ -22,5 +23,6 @@ describe 'Customers API' do
     expect(response).to be_successful
     expect(customer.class).to eq(Hash)
     expect(customer["id"]).to eq(id)
+    expect(customer["first_name"]).to eq(Customer.last.first_name)
   end
 end

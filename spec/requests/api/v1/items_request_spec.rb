@@ -11,6 +11,7 @@ describe 'Items API' do
     expect(response).to be_successful
     expect(items.count).to eq(4)
     expect(items.class).to eq(Array)
+    expect(items.last["id"]).to eq(Item.last.id)
   end
   it 'sends one item via its id' do
     id = create(:item).id
@@ -22,5 +23,6 @@ describe 'Items API' do
     expect(item.class).to eq(Hash)
     expect(response).to be_successful
     expect(item["id"]).to eq(id)
+    expect(item["name"]).to eq(Item.last.name)
   end
 end

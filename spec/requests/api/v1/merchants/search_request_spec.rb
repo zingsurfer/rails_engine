@@ -5,7 +5,7 @@ describe 'Merchants API search' do
 
     it 'by name' do
       create_list(:merchant, 4)
-      value = create(:merchant).name
+      value = create(:merchant, name: "Cat Cafe").name
 
       get "/api/v1/merchants/find?name=#{value}"
 
@@ -13,8 +13,9 @@ describe 'Merchants API search' do
 
       expect(response).to be_successful
       expect(merchant["name"]).to eq(value)
+      expect(merchant["id"]).to eq(Merchant.last.id)
     end
-    
+
     it 'by id' do
       create_list(:merchant, 4)
       value = create(:merchant).id
@@ -25,6 +26,7 @@ describe 'Merchants API search' do
 
       expect(response).to be_successful
       expect(merchant["id"]).to eq(value)
+      expect(merchant["name"]).to eq(Merchant.last.name)
     end
 
     it 'by created_at' do
@@ -34,9 +36,8 @@ describe 'Merchants API search' do
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(merchant["created_at"]).to eq("2011-01-29T00:00:00.000Z")
-      # This works, but refactor if time. May be losing a millisecond between
-      #    going from a ruby DateTime object to a JSON object.
+      expect(merchant["name"]).to eq(Merchant.last.name)
+      expect(merchant["id"]).to eq(Merchant.last.id)
     end
 
     it 'by updated_at' do
@@ -48,7 +49,8 @@ describe 'Merchants API search' do
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(merchant["updated_at"]).to eq("2014-06-16T00:00:00.000Z")
+      expect(merchant["name"]).to eq(Merchant.last.name)
+      expect(merchant["id"]).to eq(Merchant.last.id)
     end
   end
 

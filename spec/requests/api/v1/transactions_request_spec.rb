@@ -11,6 +11,7 @@ describe 'Transactions API' do
     expect(response).to be_successful
     expect(transactions.class).to be(Array)
     expect(transactions.count).to eq(4)
+    expect(transactions.last["id"]).to eq(Transaction.last.id)
   end
   it 'sends a single transaction' do
     id = create(:transaction).id
@@ -22,5 +23,6 @@ describe 'Transactions API' do
     expect(response).to be_successful
     expect(transaction.class).to eq(Hash)
     expect(transaction["id"]).to eq(id)
+    expect(transaction["invoice_id"]).to eq(Transaction.last.invoice_id)
   end
 end
