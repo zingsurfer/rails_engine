@@ -6,4 +6,6 @@ class Transaction < ApplicationRecord
   validates_presence_of :result
   validates_presence_of :created_at
   validates_presence_of :updated_at
+
+  scope :success, -> { where(result: "success")}
 end
