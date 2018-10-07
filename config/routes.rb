@@ -7,23 +7,15 @@ Rails.application.routes.draw do
         get '/:id/transactions', to: 'transactions#index'
       end
 
-      namespace :merchants do
-        get '/find', to: 'search#show'
-        get '/most_revenue', to: 'most_revenue#index'
-        get '/most_items', to: 'most_items#index'
-        get '/:id/items', to: 'items#index'
-        get '/:id/invoices', to: 'invoices#index'
-      end
-
       namespace :items do
-        get '/:id/merchant', to: 'merchant#show'
         get '/:id/invoice_items', to: 'invoice_items#index'
+        get '/:id/merchant', to: 'merchant#show'
       end
 
       namespace :invoices do
+        get '/:id/customer', to: 'customer#show'
         get '/:id/items', to: 'items#index'
         get '/:id/invoice_items', to: 'invoice_items#index'
-        get '/:id/customer', to: 'customer#show'
         get '/:id/merchant', to: 'merchant#show'
         get '/:id/transactions', to: 'transactions#index'
       end
@@ -33,15 +25,23 @@ Rails.application.routes.draw do
         get '/:id/item', to: 'item#show'
       end
 
+      namespace :merchants do
+        get '/find', to: 'search#show'
+        get '/:id/items', to: 'items#index'
+        get '/:id/invoices', to: 'invoices#index'
+        get '/most_revenue', to: 'most_revenue#index'
+        get '/most_items', to: 'most_items#index'
+      end
+
       namespace :transactions do
         get '/:id/invoice', to: 'invoice#show'
       end
 
-      resources :merchants, only: [:index, :show]
+      resources :customers, only: [:index, :show]
       resources :items, only: [:index, :show]
       resources :invoices, only: [:index, :show]
       resources :invoice_items, only: [:index, :show]
-      resources :customers, only: [:index, :show]
+      resources :merchants, only: [:index, :show]
       resources :transactions, only: [:index, :show]
     end
   end
