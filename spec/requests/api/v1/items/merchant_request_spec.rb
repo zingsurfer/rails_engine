@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe 'Item Merchant API' do
   it 'returns the merchant associated with an item' do
+    create(:merchant) #unrelated merchant
     merchant_id = create(:merchant).id
     item_id = create(:item, merchant_id: merchant_id).id
 

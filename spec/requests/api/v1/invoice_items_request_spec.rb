@@ -11,6 +11,7 @@ describe 'InvoiceItems API' do
     expect(response).to be_successful
     expect(invoice_items.class).to eq(Array)
     expect(invoice_items.count).to eq(4)
+    expect(invoice_items.last["id"]).to eq(InvoiceItem.last.id)
   end
   it 'sends a single invoice item' do
     id = create(:invoice_item).id
@@ -22,5 +23,6 @@ describe 'InvoiceItems API' do
     expect(response).to be_successful
     expect(invoice_item.class).to eq(Hash)
     expect(invoice_item["id"]).to eq(id)
+    expect(invoice_item["item_id"]).to eq(InvoiceItem.last.item_id)
   end
 end

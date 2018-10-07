@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe 'Item InvoiceItems API' do
   it 'returns a list of invoice items for an item' do
+    create(:invoice_item) #unrelated invoice_item
     id = create(:item).id
     create_list(:invoice_item, 4, item_id: id)
 

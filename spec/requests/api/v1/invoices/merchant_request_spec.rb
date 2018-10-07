@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe 'Invoice Merchant API' do
   it 'returns the merchant associated with an invoice' do
+    create(:merchant) #unrelated merchant
     merchant_id = create(:merchant).id
     invoice_id = create(:invoice, merchant_id: merchant_id).id
 

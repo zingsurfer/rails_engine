@@ -11,6 +11,7 @@ describe 'Merchants API' do
     expect(response).to be_successful
     expect(merchants.class).to eq(Array)
     expect(merchants.count).to eq(4)
+    expect(merchants.last["name"]).to eq(Merchant.last.name)
   end
   it 'sends one merchant via its id' do
     id = create(:merchant).id
@@ -21,6 +22,7 @@ describe 'Merchants API' do
 
     expect(merchant.class).to eq(Hash)
     expect(merchant["id"]).to eq(id)
+    expect(merchant["name"]).to eq(Merchant.last.name)
     expect(response).to be_successful
   end
 end
