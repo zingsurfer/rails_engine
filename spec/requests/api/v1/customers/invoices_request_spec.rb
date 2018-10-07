@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe 'Customer invoices API' do
   it 'sends a list of invoices for a customer' do
+    create(:invoice) #unrelated invoice
     customer_id = create(:customer).id
     invoices = create_list(:invoice, 3, customer_id: customer_id)
 
