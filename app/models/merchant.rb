@@ -31,4 +31,12 @@ class Merchant < ApplicationRecord
     .order(id: :desc)
     .first
   end
+
+  def self.revenue_on_date(date, merchant_id)
+    select("merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) AS revenue")
+      .joins(invoices: [:invoice_items, :transactions])
+      .where(merchants: {id: merchant_id}, transactions: {result: 'success'}, invoices: {created_at: date.to_date.beginning_of_day..date.to_date.end_of_day})
+      .group(:id)
+      .first
+  end
 end
