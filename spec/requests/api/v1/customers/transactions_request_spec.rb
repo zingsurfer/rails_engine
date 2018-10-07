@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe 'Customer transactions API' do
   it 'sends a list of transactions for a customer' do
+    create(:transaction) #unrelated transaction
     customer_id = create(:customer).id
     invoices = create_list(:invoice, 3, customer_id: customer_id)
     transaction_1, transaction_2, transaction_3 = invoices.map do |invoice|
