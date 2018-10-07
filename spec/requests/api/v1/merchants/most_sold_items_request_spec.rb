@@ -25,6 +25,5 @@ describe 'Merchants API most sold items' do
     merchants = JSON.parse(response.body)
     expect(response).to be_successful
     expect(merchants.count).to eq(3)
-    expect(merchants.first["sold_items"]).to eq(6)
   end
 end

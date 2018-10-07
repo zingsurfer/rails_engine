@@ -36,7 +36,6 @@ describe 'Merchants API search' do
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(merchant["created_at"]).to eq("2011-01-29T00:00:00.000Z")
       expect(merchant["name"]).to eq(Merchant.last.name)
       expect(merchant["id"]).to eq(Merchant.last.id)
     end
@@ -50,7 +49,6 @@ describe 'Merchants API search' do
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(merchant["updated_at"]).to eq("2014-06-16T00:00:00.000Z")
       expect(merchant["name"]).to eq(Merchant.last.name)
       expect(merchant["id"]).to eq(Merchant.last.id)
     end
