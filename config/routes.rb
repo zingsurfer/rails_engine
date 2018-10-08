@@ -10,7 +10,10 @@ Rails.application.routes.draw do
 
       namespace :items do
         get '/:id/invoice_items', to: 'invoice_items#index'
+        get '/:id/best_day', to: 'best_day#show'
         get '/:id/merchant', to: 'merchant#show'
+        get '/most_items', to: 'most_items#index'
+        get '/most_revenue', to: 'most_revenue#index'
       end
 
       namespace :invoices do
@@ -29,6 +32,8 @@ Rails.application.routes.draw do
       namespace :merchants do
         get '/find', to: 'search#show'
         get '/find_all', to: 'search#index'
+        get '/:id/customers_with_pending_invoices', to: 'pending_invoices#index'
+        get '/:id/favorite_customer', to: 'favorite_customer#show'
         get '/:id/items', to: 'items#index'
         get '/:id/invoices', to: 'invoices#index'
         get '/revenue', to: 'revenue#index'

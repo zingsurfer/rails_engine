@@ -8,4 +8,5 @@ class Transaction < ApplicationRecord
   validates_presence_of :updated_at
 
   scope :success, -> { where(result: "success")}
+
 end
