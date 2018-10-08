@@ -1,5 +1,6 @@
 class Transaction < ApplicationRecord
   belongs_to :invoice
+  has_many :merchants, through: :invoice
 
   validates_presence_of :invoice_id
   validates_presence_of :credit_card_number

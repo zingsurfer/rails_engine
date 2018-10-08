@@ -5,12 +5,21 @@ class Customer < ApplicationRecord
   has_many :transactions, through: :invoices
   has_many :merchants, through: :invoices
 
+  # def self.favorite_customer(merchant_id)
+  #   joins(invoices: :transactions)
+  #   .merge(Transaction.success)
+  #   .where(invoices: {merchant_id: merchant_id})
+  #   .group(:id)
+  #   .order(id: :desc)
+  #   .first
+  # end
   def self.favorite_customer(merchant_id)
-    joins(invoices: :transactions)
+    select("customers.*, count(transactions.id) AS num_transactions")
+    .joins(:merchants, :transactions)
     .merge(Transaction.success)
     .where(invoices: {merchant_id: merchant_id})
-    .group(:id)
-    .order(id: :desc)
+    .group("customers.id")
+    .order("num_transactions DESC")
     .first
   end
 
