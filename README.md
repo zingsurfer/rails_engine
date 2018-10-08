@@ -1,11 +1,11 @@
 
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/Autumn-Martin/rails_engine.svg?columns=all)](https://waffle.io/Autumn-Martin/rails_engine)
 
-### About
-#### Intro
+# About
+### Intro
 This project was a solo, week-long project to practice building a RESTful JSON API. Rails Engine includes record endpoints, relationship endpoints, & business intelligence for merchant, customer, invoice, item, invoice item, and transaction data.
 
-### Getting Started
+## Getting Started
 
 This project uses Ruby on Rails framework version 5.1.6, which can be installed [here](http://installrails.com/).
 The gems required for this project were installed using [Bundler](http://bundler.io/).
@@ -25,7 +25,7 @@ rake import:all
 
 In order to spin-up the server, run: `rails s`
 
-### Testing
+## Testing
 
 [Rspec-Rails](https://github.com/rspec/rspec-rails) is used for testing. [FactoryBot](https://github.com/thoughtbot/factory_bot_rails) is used for creating test data, and [Shoulda Matchers 3.1](https://github.com/thoughtbot/shoulda-matchers) is used for testing validations on the models.
 
@@ -35,7 +35,7 @@ In order to run tests, perform the following:
 
 `rspec`
 
-## Turings project expectations are located [here](http://backend.turing.io/module3/projects/rails_engine) and below:
+#### Turings project expectations are located [here](http://backend.turing.io/module3/projects/rails_engine) and below:
 
 --------------------------------------------------
 --------------------------------------------------
