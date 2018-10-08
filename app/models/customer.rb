@@ -13,4 +13,11 @@ class Customer < ApplicationRecord
     .order(id: :desc)
     .first
   end
+
+  def self.pending_invoice_customers(merchant_id)
+    select("customers.*, merchants.id AS merchant_id")
+    .joins(invoices: :transactions)
+    .joins(:merchants)
+    .where.not(transactions: {result: "success"})
+  end
 end
