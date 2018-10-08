@@ -11,6 +11,7 @@ describe 'Merchants API search' do
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
+      expect(merchant.class).to eq(Hash)
       expect(merchant["name"]).to eq(value)
       expect(merchant["id"]).to eq(Merchant.last.id)
     end
@@ -24,17 +25,19 @@ describe 'Merchants API search' do
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
+      expect(merchant.class).to eq(Hash)
       expect(merchant["id"]).to eq(value)
       expect(merchant["name"]).to eq(Merchant.last.name)
     end
 
     it 'by created_at' do
-      value = Merchant.create!(name: "Betty", created_at: DateTime.strptime("01-29-2011 00:00:00", "%m-%d-%Y %H:%M:%S")).created_at
+      value = create(:merchant, created_at: DateTime.strptime("01-29-2011 00:00:00", "%m-%d-%Y %H:%M:%S")).created_at
       get "/api/v1/merchants/find?created_at=#{value}"
 
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
+      expect(merchant.class).to eq(Hash)
       expect(merchant["name"]).to eq(Merchant.last.name)
       expect(merchant["id"]).to eq(Merchant.last.id)
     end
@@ -48,6 +51,7 @@ describe 'Merchants API search' do
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
+      expect(merchant.class).to eq(Hash)
       expect(merchant["name"]).to eq(Merchant.last.name)
       expect(merchant["id"]).to eq(Merchant.last.id)
     end
