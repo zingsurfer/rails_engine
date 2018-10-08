@@ -35,7 +35,9 @@ In order to run tests, perform the following:
 
 `rspec`
 
+## Turings project expectations are located [here](http://backend.turing.io/module3/projects/rails_engine) and below:
 
+--------------------------------------------------
 --------------------------------------------------
 Turing School of Software and Design
 
