@@ -8,7 +8,7 @@ class Merchant < ApplicationRecord
   def self.most_revenue(quantity = nil)
     select("merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) AS revenue")
     .joins(invoices: [:transactions, :invoice_items])
-    .where(transactions: {result: "success"})
+    .merge(Transaction.success)
     .group(:id)
     .order("revenue DESC")
     .limit(quantity)
@@ -34,11 +34,11 @@ class Merchant < ApplicationRecord
 
   def self.revenue_on_date(date, merchant_id)
     select("merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) AS revenue")
-      .joins(invoices: [:invoice_items, :transactions])
-      .merge(Transaction.success)
-      .where(merchants: {id: merchant_id}, transactions: {result: 'success'}, invoices: {created_at: date.to_date.beginning_of_day..date.to_date.end_of_day})
-      .group(:id)
-      .first
+    .joins(invoices: [:invoice_items, :transactions])
+    .merge(Transaction.success)
+    .where(merchants: {id: merchant_id}, transactions: {result: 'success'}, invoices: {created_at: date.to_date.beginning_of_day..date.to_date.end_of_day})
+    .group(:id)
+    .first
   end
 
   def self.total_revenue(date)
