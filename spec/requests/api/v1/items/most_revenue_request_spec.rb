@@ -8,7 +8,7 @@ describe 'Items API most revenue' do
     queried_items.map.with_index do |item, index|
       invoice = create(:invoice)
       create(:invoice_item, item: item, invoice: invoice, unit_price: index + 10)
-      create(:transaction, invoice: invoice)
+      create(:transaction, invoice: invoice, result: "success")
     end
 
     x = 3
@@ -17,6 +17,7 @@ describe 'Items API most revenue' do
     items = JSON.parse(response.body)
 
     expect(response).to be_successful
-    expect(items.first["id"]).to be(queried_items[3].id)
+    expect(items.first["id"]).to eq(queried_items[3].id)
+    expect(items.last["id"]).to eq(queried_items[1].id)
   end
 end
