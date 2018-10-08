@@ -12,11 +12,20 @@ class Item < ApplicationRecord
 
   def self.best_sell_day(item_id)
     select("transactions.created_at AS date, sum(invoice_items.quantity * invoice_items.unit_price) AS revenue")
-      .joins(invoices: :transactions)
-      .merge(Transaction.success)
-      .where(items: { id: item_id })
-      .group("transactions.created_at")
-      .order("revenue DESC")
-      .limit(1)
+    .joins(invoices: :transactions)
+    .merge(Transaction.success)
+    .where(items: { id: item_id })
+    .group("transactions.created_at")
+    .order("revenue DESC")
+    .limit(1)
+  end
+
+  def self.most_revenue(quantity = nil)
+    select("items.*, sum(invoice_items.quantity * invoice_items.unit_price) As revenue")
+    .joins(invoices: :transactions)
+    .merge(Transaction.success)
+    .group(:id)
+    .order("revenue DESC")
+    .limit(quantity)
   end
 end
