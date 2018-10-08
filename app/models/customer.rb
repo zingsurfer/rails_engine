@@ -22,6 +22,15 @@ class Customer < ApplicationRecord
     .order("num_transactions DESC")
     .first
   end
+  # def self.favorite_merchant(customer_id)
+  #   select("merchants.*, count(transactions.id) AS num_transactions")
+  #   .joins(:customers, :transactions)
+  #   .merge(Transaction.success)
+  #   .where(invoices: {customer_id: customer_id})
+  #   .group("merchantss.id")
+  #   .order("num_transactions DESC")
+  #   .first
+  # end
 
   def self.pending_invoice_customers(merchant_id)
     select("customers.*, merchants.id AS merchant_id")

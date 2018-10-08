@@ -24,14 +24,14 @@ class Merchant < ApplicationRecord
     .limit(quantity)
   end
 
-  def self.favorite_merchant(customer_id)
-    joins(invoices: :transactions)
-    .merge(Transaction.success)
-    .where(invoices: {customer_id: customer_id})
-    .group(:id)
-    .order(id: :desc)
-    .first
-  end
+  # def self.favorite_merchant(customer_id)
+  #   joins(invoices: :transactions)
+  #   .merge(Transaction.success)
+  #   .where(invoices: {customer_id: customer_id})
+  #   .group(:id)
+  #   .order(id: :desc)
+  #   .first
+  # end
 
   def self.revenue_on_date(date, merchant_id)
     select("merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) AS revenue")
@@ -56,6 +56,15 @@ class Merchant < ApplicationRecord
   #   .where(invoices: {merchant_id: merchant_id})
   #   .group("customers.id")
   #   .order("num_transactions DESC")
-  #   .limit(1)
+  #   .first
   # end
+  def self.favorite_merchant(customer_id)
+    select("merchants.*, count(transactions.id) AS num_transactions")
+    .joins(:customers, :transactions)
+    .merge(Transaction.success)
+    .where(invoices: {customer_id: customer_id})
+    .group("merchants.id")
+    .order("num_transactions DESC")
+    .first
+  end
 end
