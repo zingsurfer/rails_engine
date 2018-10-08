@@ -1,5 +1,5 @@
 
-[![Waffle.io - Columns and their card count](https://badge.waffle.io/Autumn-Martin/smart_summon.svg?columns=all)(https://badge.waffle.io/Autumn-Martin/rails_engine.svg?columns=all)]
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/Autumn-Martin/rails_engine.svg?columns=all)](https://waffle.io/Autumn-Martin/rails_engine)
 
 ### About
 #### Intro
