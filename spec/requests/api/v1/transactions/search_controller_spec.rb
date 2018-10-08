@@ -16,20 +16,6 @@ describe 'Transactions API search' do
       expect(transaction["id"]).to eq(Transaction.last.id)
     end
 
-    it 'by credit_card_expiration_date' do
-      create(:transaction) #nonqueried transaction
-      value = create(:transaction, credit_card_expiration_date: "122017").credit_card_expiration_date
-
-      get "/api/v1/transactions/find?credit_card_expiration_date=#{value}"
-
-      transaction = JSON.parse(response.body)
-      
-      expect(response).to be_successful
-      expect(transaction.class).to eq(Hash)
-      expect(transaction["credit_card_expiration_date"]).to eq(value)
-      expect(transaction["id"]).to eq(Transaction.last.id)
-    end
-
     it 'by id' do
       create(:transaction) #nonqueried transaction
       value = create(:transaction).id
@@ -87,24 +73,6 @@ describe 'Transactions API search' do
       expect(transactions.count).to eq(2)
       expect(transactions[0]["credit_card_number"]).to eq(value)
       expect(transactions[1]["credit_card_number"]).to eq(value)
-      expect(transactions[0]["id"]).to eq(queried_transactions[0].id)
-      expect(transactions[1]["id"]).to eq(queried_transactions[1].id)
-    end
-
-    it 'by credit_card_expiration_date' do
-      create(:transaction) #nonqueried transaction
-      queried_transactions = create_list(:transaction, 2, credit_card_expiration_date: "122015")
-      value = queried_transactions[0].credit_card_expiration_date
-
-      get "/api/v1/transactions/find_all?credit_card_expiration_date=#{value}"
-
-      transactions = JSON.parse(response.body)
-
-      expect(response).to be_successful
-      expect(transactions.class).to eq(Array)
-      expect(transactions.count).to eq(2)
-      expect(transactions[0]["credit_card_expiration_date"]).to eq(value)
-      expect(transactions[1]["credit_card_expiration_date"]).to eq(value)
       expect(transactions[0]["id"]).to eq(queried_transactions[0].id)
       expect(transactions[1]["id"]).to eq(queried_transactions[1].id)
     end
