@@ -3,12 +3,16 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       namespace :customers do
+        get '/find', to: 'search#show'
+        get '/find_all', to: 'search#index'
         get '/:id/invoices', to: 'invoices#index'
         get '/:id/transactions', to: 'transactions#index'
         get '/:id/favorite_merchant', to: 'favorite_merchant#show'
       end
 
       namespace :items do
+        get '/find', to: 'search#show'
+        get '/find_all', to: 'search#index'
         get '/:id/invoice_items', to: 'invoice_items#index'
         get '/:id/best_day', to: 'best_day#show'
         get '/:id/merchant', to: 'merchant#show'
@@ -17,6 +21,8 @@ Rails.application.routes.draw do
       end
 
       namespace :invoices do
+        get '/find', to: 'search#show'
+        get '/find_all', to: 'search#index'
         get '/:id/customer', to: 'customer#show'
         get '/:id/items', to: 'items#index'
         get '/:id/invoice_items', to: 'invoice_items#index'
@@ -25,6 +31,8 @@ Rails.application.routes.draw do
       end
 
       namespace :invoice_items do
+        get '/find', to: 'search#show'
+        get '/find_all', to: 'search#index'
         get '/:id/invoice', to: 'invoice#show'
         get '/:id/item', to: 'item#show'
       end
@@ -43,6 +51,8 @@ Rails.application.routes.draw do
       end
 
       namespace :transactions do
+        get '/find', to: 'search#show'
+        get '/find_all', to: 'search#index'
         get '/:id/invoice', to: 'invoice#show'
       end
 

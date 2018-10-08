@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'Merchants API search' do
   describe 'finds a single merchant' do
     it 'by name' do
-      create_list(:merchant, 4)
+      create(:merchant) #nonqueried merchant
       value = create(:merchant, name: "Cat Cafe").name
 
       get "/api/v1/merchants/find?name=#{value}"
@@ -11,12 +11,13 @@ describe 'Merchants API search' do
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
+      expect(merchant.class).to eq(Hash)
       expect(merchant["name"]).to eq(value)
       expect(merchant["id"]).to eq(Merchant.last.id)
     end
 
     it 'by id' do
-      create_list(:merchant, 4)
+      create(:merchant) #nonqueried merchant
       value = create(:merchant).id
 
       get "/api/v1/merchants/find?id=#{value}"
@@ -24,23 +25,26 @@ describe 'Merchants API search' do
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
+      expect(merchant.class).to eq(Hash)
       expect(merchant["id"]).to eq(value)
       expect(merchant["name"]).to eq(Merchant.last.name)
     end
 
     it 'by created_at' do
-      value = Merchant.create!(name: "Betty", created_at: DateTime.strptime("01-29-2011 00:00:00", "%m-%d-%Y %H:%M:%S")).created_at
+      create(:merchant) #nonqueried merchant
+      value = create(:merchant, created_at: DateTime.strptime("01-29-2011 00:00:00", "%m-%d-%Y %H:%M:%S")).created_at
       get "/api/v1/merchants/find?created_at=#{value}"
 
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
+      expect(merchant.class).to eq(Hash)
       expect(merchant["name"]).to eq(Merchant.last.name)
       expect(merchant["id"]).to eq(Merchant.last.id)
     end
 
     it 'by updated_at' do
-      create_list(:merchant, 4)
+      create(:merchant) #nonqueried merchant
       value = create(:merchant, updated_at: DateTime.strptime("06-16-2014 00:00:00", "%m-%d-%Y %H:%M:%S")).updated_at
 
       get "/api/v1/merchants/find?updated_at=#{value}"
@@ -48,6 +52,7 @@ describe 'Merchants API search' do
       merchant = JSON.parse(response.body)
 
       expect(response).to be_successful
+      expect(merchant.class).to eq(Hash)
       expect(merchant["name"]).to eq(Merchant.last.name)
       expect(merchant["id"]).to eq(Merchant.last.id)
     end
@@ -55,7 +60,7 @@ describe 'Merchants API search' do
 
   describe 'finds a multiple merchants' do
     it 'by name' do
-      create_list(:merchant, 1)
+      create(:merchant) #nonqueried merchant
       queried_merchants = create_list(:merchant, 2, name: "Cat Cafe")
       value = queried_merchants[0].name
 
@@ -73,7 +78,7 @@ describe 'Merchants API search' do
     end
 
     it 'by id' do
-      create_list(:merchant, 1)
+      create(:merchant) #nonqueried merchant
       queried_merchant = create(:merchant)
       value = queried_merchant.id
 
@@ -88,29 +93,35 @@ describe 'Merchants API search' do
       expect(merchant[0]["name"]).to eq(queried_merchant.name)
     end
 
-  #   it 'by created_at' do
-  #     value = Merchant.create!(name: "Betty", created_at: DateTime.strptime("01-29-2011 00:00:00", "%m-%d-%Y %H:%M:%S")).created_at
-  #     get "/api/v1/merchants/find_all?created_at=#{value}"
-  #
-  #     merchant = JSON.parse(response.body)
-  #
-  #     expect(response).to be_successful
-  #     expect(merchant["name"]).to eq(Merchant.last.name)
-  #     expect(merchant["id"]).to eq(Merchant.last.id)
-  #   end
-  #
-  #   it 'by updated_at' do
-  #     create_list(:merchant, 4)
-  #     value = create(:merchant, updated_at: DateTime.strptime("06-16-2014 00:00:00", "%m-%d-%Y %H:%M:%S")).updated_at
-  #
-  #     get "/api/v1/merchants/find_all?updated_at=#{value}"
-  #
-  #     merchant = JSON.parse(response.body)
-  #
-  #     expect(response).to be_successful
-  #     expect(merchant["name"]).to eq(Merchant.last.name)
-  #     expect(merchant["id"]).to eq(Merchant.last.id)
-  #   end
-  end
+    it 'by created_at' do
+      create(:merchant) #nonqueried merchant
+      create_list(:merchant, 2, created_at: DateTime.strptime("01-29-2011 00:00:00", "%m-%d-%Y %H:%M:%S"))
+      value = create(:merchant, created_at: DateTime.strptime("01-29-2011 00:00:00", "%m-%d-%Y %H:%M:%S")).created_at
+      get "/api/v1/merchants/find_all?created_at=#{value}"
 
+      merchants = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(merchants.class).to eq(Array)
+      expect(merchants.count).to eq(3)
+      expect(merchants.last["name"]).to eq(Merchant.last.name)
+      expect(merchants.last["id"]).to eq(Merchant.last.id)
+    end
+
+    it 'by updated_at' do
+      create(:merchant) #nonqueried merchant
+      create_list(:merchant, 2, updated_at: DateTime.strptime("06-16-2014 00:00:00", "%m-%d-%Y %H:%M:%S"))
+      value = create(:merchant, updated_at: DateTime.strptime("06-16-2014 00:00:00", "%m-%d-%Y %H:%M:%S")).updated_at
+
+      get "/api/v1/merchants/find_all?updated_at=#{value}"
+
+      merchants = JSON.parse(response.body)
+
+      expect(response).to be_successful
+      expect(merchants.class).to eq(Array)
+      expect(merchants.count).to eq(3)
+      expect(merchants.last["name"]).to eq(Merchant.last.name)
+      expect(merchants.last["id"]).to eq(Merchant.last.id)
+    end
+  end
 end
